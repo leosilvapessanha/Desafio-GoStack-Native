@@ -24,32 +24,37 @@ const FloatingCart: React.FC = () => {
   const navigation = useNavigation();
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE PRICE FROM ALL ITEMS IN THE CART
+    let total = 0;
+    products.forEach(item => {
+      total += item.price * item.quantity;
 
-    return formatValue(0);
-  }, [products]);
+      return formatValue(0);
+    }, [products]);
 
-  const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const totalItensInCart = useMemo(() => {
+      let total: number;
+      products.forEach(item => {
+        total += item.quantity;
+      });
 
-    return 0;
-  }, [products]);
+      return total;
+    }, [products]);
 
-  return (
-    <Container>
-      <CartButton
-        testID="navigate-to-cart-button"
-        onPress={() => navigation.navigate('Cart')}
-      >
-        <FeatherIcon name="shopping-cart" size={24} color="#fff" />
-        <CartButtonText>{`${totalItensInCart} itens`}</CartButtonText>
-      </CartButton>
+    return (
+      <Container>
+        <CartButton
+          testID="navigate-to-cart-button"
+          onPress={() => navigation.navigate('Cart')}
+        >
+          <FeatherIcon name="shopping-cart" size={24} color="#fff" />
+          <CartButtonText>{`${totalItensInCart} itens`}</CartButtonText>
+        </CartButton>
 
-      <CartPricing>
-        <CartTotalPrice>{cartTotal}</CartTotalPrice>
-      </CartPricing>
-    </Container>
-  );
-};
+        <CartPricing>
+          <CartTotalPrice>{cartTotal}</CartTotalPrice>
+        </CartPricing>
+      </Container>
+    );
+  };
 
-export default FloatingCart;
+  export default FloatingCart;
