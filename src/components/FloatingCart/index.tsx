@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,9 +15,6 @@ import formatValue from '../../utils/formatValue';
 
 import { useCart } from '../../hooks/cart';
 
-// Calculo do total
-// Navegação no clique do TouchableHighlight
-
 const FloatingCart: React.FC = () => {
   const { products } = useCart();
 
@@ -27,34 +24,35 @@ const FloatingCart: React.FC = () => {
     let total = 0;
     products.forEach(item => {
       total += item.price * item.quantity;
+    });
 
-      return formatValue(0);
-    }, [products]);
+    return formatValue(total);
+  }, [products]);
 
-    const totalItensInCart = useMemo(() => {
-      let total: number;
-      products.forEach(item => {
-        total += item.quantity;
-      });
+  const totalItensInCart = useMemo(() => {
+    let total = 0;
+    products.forEach(item => {
+      total += item.quantity;
+    });
 
-      return total;
-    }, [products]);
+    return total;
+  }, [products]);
 
-    return (
-      <Container>
-        <CartButton
-          testID="navigate-to-cart-button"
-          onPress={() => navigation.navigate('Cart')}
-        >
-          <FeatherIcon name="shopping-cart" size={24} color="#fff" />
-          <CartButtonText>{`${totalItensInCart} itens`}</CartButtonText>
-        </CartButton>
+  return (
+    <Container>
+      <CartButton
+        testID="navigate-to-cart-button"
+        onPress={() => navigation.navigate('Cart')}
+      >
+        <FeatherIcon name="shopping-cart" size={24} color="#fff" />
+        <CartButtonText>{`${totalItensInCart} itens`}</CartButtonText>
+      </CartButton>
 
-        <CartPricing>
-          <CartTotalPrice>{cartTotal}</CartTotalPrice>
-        </CartPricing>
-      </Container>
-    );
-  };
+      <CartPricing>
+        <CartTotalPrice>{cartTotal}</CartTotalPrice>
+      </CartPricing>
+    </Container>
+  );
+};
 
-  export default FloatingCart;
+export default FloatingCart;
